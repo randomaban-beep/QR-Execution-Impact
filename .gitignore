@@ -1,0 +1,37 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Environments & builds
+.venv/
+env/
+venv/
+ENV/
+*.egg-info/
+build/
+dist/
+
+# Data & Artifacts (NEVER commit raw or cached market data)
+data/
+data/raw/
+data/processed/
+*.zip
+*.CHECKSUM
+*.parquet
+*.csv
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

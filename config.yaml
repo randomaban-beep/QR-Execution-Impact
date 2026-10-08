@@ -1,0 +1,45 @@
+# config.yaml — Configuration for Market Impact & Execution Research
+
+project:
+  name: "exec-impact"
+  random_seed: 42
+
+data:
+  symbols:
+    - "BTCUSDT"
+    - "ETHUSDT"
+  year: 2024
+  month: 1               # 2024-01: 31 full calendar days
+  base_url: "https://data.binance.vision/data/spot/daily/aggTrades"
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  bar_intervals:         # bar aggregations in minutes
+    - 1
+    - 5
+    - 15
+
+impact:
+  intervals: [1, 5, 15]  # regression horizons in minutes
+  delta_fixed: 0.5       # canonical square-root benchmark
+  bootstrap_samples: 500 # bootstrap iterations for 95% CIs
+  train_weeks: [1, 2]    # out-of-sample training window (days 1-14)
+  test_weeks: [3, 4]     # out-of-sample test window (days 15-28+)
+  permanent_lags: [1, 2, 5, 10, 15] # lag intervals to estimate permanent decay
+
+execution:
+  horizons_minutes: [30, 60, 240]
+  order_sizes_adv_pct: [0.01, 0.05, 0.10, 0.50, 1.00] # % of trailing daily volume
+  lambdas: [1.0e-8, 1.0e-6, 1.0e-5, 1.0e-4, 1.0e-3, 1.0e-2]
+  slice_interval_minutes: 1 # each child slice trades every 1 minute
+  taker_fee_bps: 4.5        # Binance VIP0 / standard taker fee in bps
+  volume_profile_lookback_days: 7
+
+simulation:
+  n_start_samples: 500   # 500+ paired random start times across test period
+  min_warmup_days: 7     # require at least 7 days prior for volume profile and volatility
+  monte_carlo_paths: 1000 # number of synthetic GBM paths for correctness check
+
+results:
+  dir: "results"
+  metrics_file: "results/metrics.json"
+  figures_dir: "results/figures"
