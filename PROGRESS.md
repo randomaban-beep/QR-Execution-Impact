@@ -69,18 +69,18 @@ Status indicators:
 - [x] Unit tests: total order sum equals $X$, non-negativity, monotone holdings, $\lambda \to 0$ convergence to TWAP, strict anti-lookahead test on 7-day VWAP profile.
 - **Verification**: Run `pytest tests/test_schedules.py`. (PASSED - 5/5 tests passing, 21/21 total)
 
-### [ ] Stage 5: Execution Simulation Engine (`src/exec_impact/simulate.py`)
-- [ ] Simulation mode (A): Tape Replay
+### [x] Stage 5: Execution Simulation Engine (`src/exec_impact/simulate.py`)
+- [x] Simulation mode (A): Tape Replay
   - Sample 500+ paired random start times across the month.
   - Determine arrival price $S_0$ as the last trade before start.
   - Compute slice fill price = tape VWAP over slice interval + calibrated temporary impact + accumulated permanent impact.
   - Explicit documentation: order does not alter historical tape.
-- [ ] Simulation mode (B): Synthetic Monte Carlo
+- [x] Simulation mode (B): Synthetic Monte Carlo
   - Geometric Brownian Motion (GBM) price simulator with linear impact.
   - Correctness verification that Almgren-Chriss minimizes mean-variance utility $E[x] + \lambda \text{Var}(x)$.
-- [ ] Parameter grid execution: sizes $\{0.01, 0.05, 0.1, 0.5, 1.0\} \times \text{ADV}$, horizons $\{30\text{m}, 1\text{h}, 4\text{h}\}$, symbols $\{BTC, ETH\}$, sides $\{Buy, Sell\}$.
-- [ ] Unit tests: buy vs sell shortfall sign conventions, zero-impact benchmark tests, Monte Carlo optimality checks.
-- **Verification**: Run `pytest tests/test_simulate.py`.
+- [x] Parameter grid execution: sizes $\{0.01, 0.05, 0.1, 0.5, 1.0\} \times \text{ADV}$, horizons $\{30\text{m}, 1\text{h}, 4\text{h}\}$, symbols $\{BTC, ETH\}$, sides $\{Buy, Sell\}$.
+- [x] Unit tests: buy vs sell shortfall sign conventions, zero-impact benchmark tests, Monte Carlo optimality checks.
+- **Verification**: Run `pytest tests/test_simulate.py`. (PASSED - 3/3 tests passing, 24/24 total)
 
 ### [ ] Stage 6: Evaluation Metrics & Efficient Frontier (`src/exec_impact/metrics.py`)
 - [ ] Calculate Implementation Shortfall (IS) in basis points (sign-adjusted: positive = cost).
