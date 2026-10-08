@@ -19,16 +19,16 @@ Status indicators:
 - [x] Set up base `Makefile` with entrypoints (`test`, `lint`, `data`, `fit`, `simulate`, `report`).
 - **Verification**: Run `pytest` and `ruff check .` with clean exits. (PASSED)
 
-### [ ] Stage 1: Data Acquisition & Normalization Pipeline (`src/exec_impact/data.py`)
-- [ ] Implement `scripts/download_data.py` to fetch spot aggTrades daily zips and `.CHECKSUM` files from `data.binance.vision`.
-- [ ] Implement SHA256 checksum verification against downloaded `.CHECKSUM` files.
-- [ ] Build robust parser in `src/exec_impact/data.py`:
+### [x] Stage 1: Data Acquisition & Normalization Pipeline (`src/exec_impact/data.py`)
+- [x] Implement `scripts/download_data.py` to fetch spot aggTrades daily zips and `.CHECKSUM` files from `data.binance.vision`.
+- [x] Implement SHA256 checksum verification against downloaded `.CHECKSUM` files.
+- [x] Build robust parser in `src/exec_impact/data.py`:
   - Detect headers vs headerless CSVs.
   - Detect millisecond vs microsecond timestamps and normalize to UTC datetime.
   - Parse aggressor side: `is_buyer_maker == True` -> Seller is aggressor (Sell), `False` -> Buyer is aggressor (Buy).
   - Clean data types and cast to Arrow/Polars/Parquet storage.
-- [ ] Write unit tests: checksum validation, timestamp parsing, schema detection, aggressor side mapping.
-- **Verification**: Run `pytest tests/test_data.py` and verify test coverage.
+- [x] Write unit tests: checksum validation, timestamp parsing, schema detection, aggressor side mapping.
+- **Verification**: Run `pytest tests/test_data.py` and verify test coverage. (PASSED - 7/7 tests passed)
 
 ### [ ] Stage 2: Bar Construction & Microstructure Features (`src/exec_impact/bars.py`)
 - [ ] Implement aggregation engine to build 1-minute, 5-minute, and 15-minute bars:
