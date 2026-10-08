@@ -87,9 +87,6 @@ def analyze_grid_cell(
     if twap_rows.empty:
         return []
 
-    # Map by (start_time, side) to ensure pairing
-    twap_indexed = twap_rows.set_index(["start_time", "side"])["shortfall_bps"]
-
     strategies = cell_df["strategy_name"].unique()
     symbol = str(cell_df["symbol"].iloc[0])
     horizon = int(cell_df["horizon_minutes"].iloc[0])
@@ -97,15 +94,19 @@ def analyze_grid_cell(
 
     for strat in strategies:
         strat_rows = cell_df[cell_df["strategy_name"] == strat]
-        strat_indexed = strat_rows.set_index(["start_time", "side"])["shortfall_bps"]
 
-        # Align paired observations
-        common_idx = strat_indexed.index.intersection(twap_indexed.index)
-        if len(common_idx) == 0:
+        # Robust paired alignment via merge on (start_time, side)
+        merged = pd.merge(
+            strat_rows[["start_time", "side", "shortfall_bps"]],
+            twap_rows[["start_time", "side", "shortfall_bps"]],
+            on=["start_time", "side"],
+            suffixes=("_strat", "_twap"),
+        )
+        if merged.empty:
             continue
 
-        strat_vals = strat_indexed.loc[common_idx].values
-        twap_vals = twap_indexed.loc[common_idx].values
+        strat_vals = merged["shortfall_bps_strat"].values
+        twap_vals = merged["shortfall_bps_twap"].values
         diff_vals = strat_vals - twap_vals
 
         mean_shortfall = float(np.mean(strat_vals))
@@ -131,7 +132,7 @@ def analyze_grid_cell(
                 horizon_minutes=horizon,
                 order_size_adv_pct=size_pct,
                 side="both",
-                sample_size=len(common_idx),
+                sample_size=len(merged),
                 mean_shortfall_bps=mean_shortfall,
                 std_shortfall_bps=std_shortfall,
                 median_shortfall_bps=median_shortfall,

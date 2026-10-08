@@ -60,20 +60,21 @@ def simulate_single_order_replay(
     slices = schedule.slice_sizes
     tape_vwaps = bars_window["vwap"].values[:N]
     trailing_volumes = bars_window["trailing_volume"].values[:N]
+    sigmas = bars_window["trailing_volatility"].values[:N]
 
     # Modeled temporary and permanent impact per slice
     # Relative flow per slice: (n_k / V_k)
     q_ratio = slices / np.maximum(trailing_volumes, 1e-4)
     flow_power = q_ratio**delta_param
 
-    # Temporary impact per slice
-    temp_impacts = arrival_price * eta_param * flow_power * side
+    # Temporary impact per slice: Delta P_temp = S_0 * sigma * eta * (n_k / V_k)^delta * side
+    temp_impacts = arrival_price * sigmas * eta_param * flow_power * side
 
     # Accumulated permanent impact
     cum_prev = np.zeros(N)
     if N > 1:
         cum_prev[1:] = np.cumsum(flow_power[:-1])
-    perm_impacts = arrival_price * gamma_param * (cum_prev + 0.5 * flow_power) * side
+    perm_impacts = arrival_price * sigmas * gamma_param * (cum_prev + 0.5 * flow_power) * side
 
     fill_prices = tape_vwaps + temp_impacts + perm_impacts
 
@@ -192,6 +193,7 @@ def run_paired_replay_simulation(
                     eta_power=eta,
                     delta=delta,
                     trailing_volume=trailing_v,
+                    volatility=sigma,
                     method="secant",
                 )
 

@@ -113,22 +113,24 @@ def linearize_temporary_impact(
     eta_power: float,
     delta: float,
     trailing_volume: float,
+    volatility: float = 1.0,
     method: str = "secant",
 ) -> float:
     """Linearize power-law impact around average reference order slice n_bar = X / N.
 
-    Impact model: I(n) = eta_power * (n / V)^delta.
+    Impact model: Delta P / S_0 = sigma * eta_power * (n / V)^delta.
     Methods:
-    - 'secant': tilde_eta = I(n_bar) / n_bar = eta_power * n_bar^(delta - 1) / V^delta
-    - 'tangent': tilde_eta = dI/dn |_{n_bar} = delta * eta_power * n_bar^(delta - 1) / V^delta
+    - 'secant': tilde_eta = sigma * eta_power * n_bar^(delta - 1) / V^delta
+    - 'tangent': tilde_eta = delta * sigma * eta_power * n_bar^(delta - 1) / V^delta
     """
     n_bar = max(1e-6, total_shares / num_slices)
     v_norm = max(1e-4, trailing_volume)
+    base_factor = volatility * eta_power * (n_bar ** (delta - 1.0)) / (v_norm**delta)
 
     if method == "tangent":
-        return float(delta * eta_power * (n_bar ** (delta - 1.0)) / (v_norm**delta))
+        return float(delta * base_factor)
     # Default secant
-    return float(eta_power * (n_bar ** (delta - 1.0)) / (v_norm**delta))
+    return float(base_factor)
 
 
 def generate_almgren_chriss_schedule(
@@ -159,7 +161,15 @@ def generate_almgren_chriss_schedule(
 
     # Limiting case: kappa -> 0 yields TWAP linear trajectory
     if kappa * t_end < 1e-4:
-        return generate_twap_schedule(total_shares, num_slices)
+        twap = generate_twap_schedule(total_shares, num_slices)
+        return ExecutionSchedule(
+            strategy_name=f"AlmgrenChriss_lambda_{risk_aversion:.1e}",
+            total_shares=total_shares,
+            num_slices=num_slices,
+            slice_sizes=twap.slice_sizes,
+            holdings=twap.holdings,
+            weights=twap.weights,
+        )
 
     # Compute continuous holdings x_k
     sinh_total = np.sinh(kappa * t_end)

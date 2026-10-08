@@ -28,9 +28,12 @@ def download_and_process_month(
     raw_dir: Path,
     processed_dir: Path,
     verify: bool = True,
+    max_days: int | None = None,
 ) -> None:
     """Download daily aggTrades for a month, verify checksums, and save to Parquet."""
     num_days = calendar.monthrange(year, month)[1]
+    if max_days is not None:
+        num_days = min(num_days, max_days)
     print(f"Downloading {symbol} for {year}-{month:02d} ({num_days} days)...")
 
     for day in tqdm(range(1, num_days + 1), desc=f"{symbol} {year}-{month:02d}"):
@@ -62,6 +65,7 @@ def main() -> None:
     parser.add_argument("--symbol", type=str, default=None, help="Override symbol (e.g. BTCUSDT)")
     parser.add_argument("--year", type=int, default=None, help="Override year")
     parser.add_argument("--month", type=int, default=None, help="Override month")
+    parser.add_argument("--days", type=int, default=None, help="Limit number of days to process")
     parser.add_argument("--no-verify", action="store_true", help="Skip checksum verification")
 
     args = parser.parse_args()
@@ -82,6 +86,7 @@ def main() -> None:
             raw_dir=raw_dir,
             processed_dir=processed_dir,
             verify=not args.no_verify,
+            max_days=args.days,
         )
 
 
