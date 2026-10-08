@@ -30,17 +30,17 @@ Status indicators:
 - [x] Write unit tests: checksum validation, timestamp parsing, schema detection, aggressor side mapping.
 - **Verification**: Run `pytest tests/test_data.py` and verify test coverage. (PASSED - 7/7 tests passed)
 
-### [ ] Stage 2: Bar Construction & Microstructure Features (`src/exec_impact/bars.py`)
-- [ ] Implement aggregation engine to build 1-minute, 5-minute, and 15-minute bars:
+### [x] Stage 2: Bar Construction & Microstructure Features (`src/exec_impact/bars.py`)
+- [x] Implement aggregation engine to build 1-minute, 5-minute, and 15-minute bars:
   - `last_price`: last trade price in the interval.
   - `volume`: total trade quantity.
   - `signed_volume` ($Q$): aggressor buy volume minus aggressor sell volume.
   - `trade_count`: total trades in the interval.
   - `realized_volatility` ($\sigma$): trailing realized volatility strictly prior to bar close.
   - `trailing_volume` ($V$): trailing average volume strictly prior to bar close.
-- [ ] Anti-lookahead assertions in rolling bar calculations.
-- [ ] Unit tests for aggregation math, boundary conditions, zero-trade intervals, and sign alignment.
-- **Verification**: Run `pytest tests/test_bars.py`.
+- [x] Anti-lookahead assertions in rolling bar calculations.
+- [x] Unit tests for aggregation math, boundary conditions, zero-trade intervals, and sign alignment.
+- **Verification**: Run `pytest tests/test_bars.py`. (PASSED - 11/11 tests passing)
 
 ### [ ] Stage 3: Market Impact Calibration & Decomposition (`src/exec_impact/impact.py`)
 - [ ] Implement normalized return regression:
