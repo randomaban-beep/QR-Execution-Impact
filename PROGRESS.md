@@ -92,21 +92,21 @@ Status indicators:
 - [x] Unit tests for metric formulas, shortfall edge cases, bootstrap CI coverage.
 - **Verification**: Run `pytest tests/test_metrics.py`. (PASSED - 4/4 tests passing, 28/28 total)
 
-### [ ] Stage 7: Reporting, Figures & README (`scripts/generate_report.py`, `README.md`)
-- [ ] Generate `results/metrics.json` capturing all grid results and statistics.
-- [ ] Generate high-resolution figures in `results/figures/`:
+### [x] Stage 7: Reporting, Figures & README (`scripts/generate_report.py`, `README.md`)
+- [x] Generate `results/metrics.json` capturing all grid results and statistics.
+- [x] Generate high-resolution figures in `results/figures/`:
   - `impact_curves.png`: fitted vs square-root impact curves with confidence bands.
   - `cost_vs_size.png`: implementation shortfall vs order size (% ADV) across strategies.
   - `efficient_frontier.png`: mean shortfall vs standard deviation across $\lambda$ values.
   - `volume_profiles.png`: 7-day prior estimated volume profiles vs actual profiles.
-- [ ] Write comprehensive, honest `README.md`:
+- [x] Write comprehensive, honest `README.md`:
   - Mathematical problem formulation and execution model.
   - Empirical results table (highlighting where AC wins AND where it fails).
   - Limitations and assumptions (endogeneity, passive fills, no order book queue, single month, crypto vs equities).
   - Complete reproduction instructions (`make report`).
-- **Verification**: Run `make report` and verify clean generation of all artifacts.
+- **Verification**: Run `make report` and verify clean generation of all artifacts. (PASSED — 4 figures + metrics.json generated)
 
-### [ ] Stage 8: Final Review & Quality Gate
-- [ ] Full test suite execution (`pytest -v`).
-- [ ] Full lint and format verification (`ruff check .`, `ruff format --check .`).
-- [ ] Verify clean git state, no tracked binary data or caches.
+### [x] Stage 8: Final Review & Quality Gate
+- [x] Full test suite execution (`pytest -v`). (PASSED — 29/29)
+- [x] Full lint and format verification (`ruff check .`, `ruff format --check .`). (PASSED — All checks passed, 27 files clean)
+- [x] Verify clean git state, no tracked binary data or caches.
