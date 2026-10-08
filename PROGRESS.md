@@ -55,19 +55,19 @@ Status indicators:
 - [x] Synthetic parameter recovery tests (simulate flow with known $Y$ and $\delta$, verify recovery).
 - **Verification**: Run `pytest tests/test_impact.py`. (PASSED - 5/5 tests passing, 16/16 total)
 
-### [ ] Stage 4: Execution Schedules & Optimization (`src/exec_impact/schedules.py`)
-- [ ] TWAP strategy: uniform child slices $\frac{X}{N}$.
-- [ ] VWAP strategy:
+### [x] Stage 4: Execution Schedules & Optimization (`src/exec_impact/schedules.py`)
+- [x] TWAP strategy: uniform child slices $\frac{X}{N}$.
+- [x] VWAP strategy:
   - Estimated VWAP: intraday volume profile computed strictly from prior 7 days rolling volume.
   - Oracle VWAP: realized volume profile benchmark (clearly flagged as unattainable oracle).
-- [ ] Almgren-Chriss optimal trajectory:
+- [x] Almgren-Chriss optimal trajectory:
   $$x_k = X \cdot \frac{\sinh(\kappa(T - t_k))}{\sinh(\kappa T)}$$
   with $\kappa = \sqrt{\frac{\lambda \sigma^2}{\tilde{\eta}}}$ where $\tilde{\eta}$ linearizes temporary impact.
-- [ ] Linearization of square-root law impact around reference order size.
-- [ ] Numerical trajectory optimizer under power-law temporary impact (scipy/cvxpy) as stretch comparison.
-- [ ] Risk-aversion parameter sweep ($\lambda$ across at least 6 values from near-zero to large).
-- [ ] Unit tests: total order sum equals $X$, non-negativity, monotone holdings, $\lambda \to 0$ convergence to TWAP, strict anti-lookahead test on 7-day VWAP profile.
-- **Verification**: Run `pytest tests/test_schedules.py`.
+- [x] Linearization of square-root law impact around reference order size.
+- [x] Numerical trajectory optimizer under power-law temporary impact (scipy/cvxpy) as stretch comparison.
+- [x] Risk-aversion parameter sweep ($\lambda$ across at least 6 values from near-zero to large).
+- [x] Unit tests: total order sum equals $X$, non-negativity, monotone holdings, $\lambda \to 0$ convergence to TWAP, strict anti-lookahead test on 7-day VWAP profile.
+- **Verification**: Run `pytest tests/test_schedules.py`. (PASSED - 5/5 tests passing, 21/21 total)
 
 ### [ ] Stage 5: Execution Simulation Engine (`src/exec_impact/simulate.py`)
 - [ ] Simulation mode (A): Tape Replay
