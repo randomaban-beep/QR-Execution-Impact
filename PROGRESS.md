@@ -82,15 +82,15 @@ Status indicators:
 - [x] Unit tests: buy vs sell shortfall sign conventions, zero-impact benchmark tests, Monte Carlo optimality checks.
 - **Verification**: Run `pytest tests/test_simulate.py`. (PASSED - 3/3 tests passing, 24/24 total)
 
-### [ ] Stage 6: Evaluation Metrics & Efficient Frontier (`src/exec_impact/metrics.py`)
-- [ ] Calculate Implementation Shortfall (IS) in basis points (sign-adjusted: positive = cost).
-- [ ] Compute summary statistics per grid cell: mean, std, 95th percentile, CVaR95.
-- [ ] Paired difference tests vs TWAP: bootstrap 95% confidence intervals and Wilcoxon signed-rank p-values.
-- [ ] Risk/cost efficient frontier analysis (mean cost vs std of cost across $\lambda$).
-- [ ] Configurable exchange fee integration (taker fee modeled as separate line).
-- [ ] Headline comparison table generator.
-- [ ] Unit tests for metric formulas, shortfall edge cases, bootstrap CI coverage.
-- **Verification**: Run `pytest tests/test_metrics.py`.
+### [x] Stage 6: Evaluation Metrics & Efficient Frontier (`src/exec_impact/metrics.py`)
+- [x] Calculate Implementation Shortfall (IS) in basis points (sign-adjusted: positive = cost).
+- [x] Compute summary statistics per grid cell: mean, std, 95th percentile, CVaR95.
+- [x] Paired difference tests vs TWAP: bootstrap 95% confidence intervals and Wilcoxon signed-rank p-values.
+- [x] Risk/cost efficient frontier analysis (mean cost vs std of cost across $\lambda$).
+- [x] Configurable exchange fee integration (taker fee modeled as separate line).
+- [x] Headline comparison table generator.
+- [x] Unit tests for metric formulas, shortfall edge cases, bootstrap CI coverage.
+- **Verification**: Run `pytest tests/test_metrics.py`. (PASSED - 4/4 tests passing, 28/28 total)
 
 ### [ ] Stage 7: Reporting, Figures & README (`scripts/generate_report.py`, `README.md`)
 - [ ] Generate `results/metrics.json` capturing all grid results and statistics.
