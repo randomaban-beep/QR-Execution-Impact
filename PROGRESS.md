@@ -42,18 +42,18 @@ Status indicators:
 - [x] Unit tests for aggregation math, boundary conditions, zero-trade intervals, and sign alignment.
 - **Verification**: Run `pytest tests/test_bars.py`. (PASSED - 11/11 tests passing)
 
-### [ ] Stage 3: Market Impact Calibration & Decomposition (`src/exec_impact/impact.py`)
-- [ ] Implement normalized return regression:
+### [x] Stage 3: Market Impact Calibration & Decomposition (`src/exec_impact/impact.py`)
+- [x] Implement normalized return regression:
   $$\frac{r}{\sigma} = Y \cdot \text{sign}(Q) \cdot \left(\frac{|Q|}{V}\right)^\delta$$
-- [ ] Log-log robust regression using Huber regressor; compare freely fitted $\delta$ against fixed square-root law ($\delta = 0.5$).
-- [ ] Bootstrap resampling for 95% confidence intervals on $Y$ and $\delta$.
-- [ ] Decompose impact into temporary vs permanent:
+- [x] Log-log robust regression using Huber regressor; compare freely fitted $\delta$ against fixed square-root law ($\delta = 0.5$).
+- [x] Bootstrap resampling for 95% confidence intervals on $Y$ and $\delta$.
+- [x] Decompose impact into temporary vs permanent:
   - Permanent impact: price response persisting $k$ intervals forward.
   - Temporary impact: peak impact minus permanent impact.
-- [ ] Weekly stability and parameter drift tracking (by symbol and week).
-- [ ] Out-of-sample predictive $R^2$ evaluation (fit on weeks 1–2, evaluate on weeks 3–4).
-- [ ] Synthetic parameter recovery tests (simulate flow with known $Y$ and $\delta$, verify recovery).
-- **Verification**: Run `pytest tests/test_impact.py`.
+- [x] Weekly stability and parameter drift tracking (by symbol and week).
+- [x] Out-of-sample predictive $R^2$ evaluation (fit on weeks 1–2, evaluate on weeks 3–4).
+- [x] Synthetic parameter recovery tests (simulate flow with known $Y$ and $\delta$, verify recovery).
+- **Verification**: Run `pytest tests/test_impact.py`. (PASSED - 5/5 tests passing, 16/16 total)
 
 ### [ ] Stage 4: Execution Schedules & Optimization (`src/exec_impact/schedules.py`)
 - [ ] TWAP strategy: uniform child slices $\frac{X}{N}$.
